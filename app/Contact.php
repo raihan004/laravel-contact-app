@@ -13,7 +13,8 @@ class Contact extends Model
         'company',
         'email',
         'phone',
-        'address'
+        'address',
+        'photo'
     ];
     
     public function group(){

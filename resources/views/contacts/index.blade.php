@@ -9,8 +9,9 @@
                         <td class="middle">
                         <div class="media">
                             <div class="media-left">
-                            <a href="#">
-                                <img class="media-object" src="http://placehold.it/100x100" alt="...">
+                            <a href="#"></a>
+                                <?php $location = $contact->photo == 'default.png' ? '/' : config('uploads.path.uploads_path'); ?>
+                                <img class="media-object" src="{{ url($location . $contact->photo) }}" width="100" height="100" alt="avatar">
                             </a>
                             </div>
                             <div class="media-body">
@@ -24,12 +25,16 @@
                         </td>
                         <td width="100" class="middle">
                         <div>
-                            <a href="{{route('contacts.edit',['id' => $contact->id ])}}" class="btn btn-circle btn-default btn-xs" title="Edit">
-                            <i class="glyphicon glyphicon-edit"></i>
-                            </a>
-                            <a href="#" class="btn btn-circle btn-danger btn-xs" title="Edit">
-                            <i class="glyphicon glyphicon-remove"></i>
-                            </a>
+                            <form method="post" action="{{route('contacts.destroy',['id'=>$contact->id])}}" enctype="multipart/form-data">
+                                {{ csrf_field() }}
+                                {{ method_field('delete') }}
+                                <a href="{{route('contacts.edit',['id' => $contact->id ])}}" class="btn btn-circle btn-default btn-xs" title="Edit">
+                                    <i class="glyphicon glyphicon-edit"></i>
+                                </a>
+                                <button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-circle btn-danger btn-xs" title="Edit">
+                                    <i class="glyphicon glyphicon-remove"></i>
+                                </button>
+                            </form>
                         </div>
                         </td>
                     </tr>

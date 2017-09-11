@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('content')
-    <form action="{{ route('contacts.store')}}" method="POST">
+    <form action="{{ route('contacts.store')}}" method="POST" enctype="multipart/form-data">
         {{ csrf_field() }}
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -78,7 +78,8 @@
                       </div>
                       <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
                       <div class="text-center">
-                        <span class="btn btn-default btn-file"><span class="fileinput-new">Choose Photo</span><span class="fileinput-exists">Change</span><input name="..." type="file"></span>
+                        <span class="btn btn-default btn-file"><span class="fileinput-new">Choose Photo</span><span class="fileinput-exists">Change</span>
+                        <input name="photo" id="photo" type="file"></span>
                         <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
                       </div>
                     </div>

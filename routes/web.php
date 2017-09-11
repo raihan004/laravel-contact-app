@@ -11,13 +11,20 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'ContactsController@index');
 
 Route::get('/lv',function(){
-    $laravel = app();
-    return "Your laravel application verison is : " . $laravel::VERSION;
+    // $laravel = app();
+    // return "Your laravel application version is : " . $laravel::VERSION;
+
+    echo public_path();
+    echo "<br>";
+    echo base_path();
+    echo "<br>";    
+    //Path to the 'app/storage' folder
+    echo storage_path();
+    echo "<br>";
+    echo config('uploads.path.full_path');    
 });
 Auth::routes();
 

@@ -14,7 +14,7 @@ class AddPhotoToContactsTable extends Migration
     public function up()
     {
         Schema::table('contacts', function (Blueprint $table) {
-            $table->string('photo')->default('image.png')->nullable();
+            $table->string('photo')->default('default.png')->nullable();
         });
     }
 

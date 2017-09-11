@@ -14,8 +14,26 @@ class ContactsController extends Controller
     private $rules = [
         'name' => ['required','min:5'],
         'company' => ['required'],
-        'email' => ['required']
+        'email' => ['required'],
+        'photo' => ['mimes:jpeg,jpg,png,gif']
     ];
+
+    private function getRequest(Request $request){
+        $data = $request->all();
+
+        if ($request->hasFile('photo')) {
+            $photo = $request->file('photo');
+            $photoFullName = $photo->getClientOriginalName();
+            $photoName = pathinfo($photoFullName,PATHINFO_FILENAME);
+            $photoExtension = pathinfo($photoFullName,PATHINFO_EXTENSION);
+            $photoSaveName = $photoName . '-' . time() . '.' . $photoExtension;
+            $destination = config('uploads.path.full_path');
+            $photo->move($destination,$photoSaveName);
+            $data['photo'] = $photoSaveName;
+        }
+
+        return $data;
+    }
     public function index(Request $request){
         if ($group_id = ($request->get('group_id'))) {
             $contacts = Contact::where('group_id',$group_id)->orderBy('id','DESC')->paginate($this->limit);
@@ -34,11 +52,11 @@ class ContactsController extends Controller
     public function store(Request $request){
         $this->validate($request,$this->rules);
 
+        $data = $this->getRequest($request);
 
-        Contact::create($request->all());
+        Contact::create($data);
 
         return redirect('/contacts')->with('success','contact created successfully');
-        // return view('contacts.create');
     }
     public function edit($id){
         $contact = Contact::find($id);
@@ -52,10 +70,32 @@ class ContactsController extends Controller
         $this->validate($request,$this->rules);
 
         $contact = Contact::findOrFail($id);
+        $oldPhoto = $contact->photo;
+        $data = $this->getRequest($request);
+        $contact->update($data);
 
-        $contact->update($request->all());
+        if ( $oldPhoto !== $contact->photo ) {
+            $this->removePhoto($oldPhoto);
+        }
 
         return redirect()->route('contacts.edit',['id' => $id])->with('success','contact updated successfully');
-        // return view('contacts.create');
+    }
+
+    public function destroy($id){
+        $contact = Contact::findOrFail($id);
+        $this->removePhoto($contact->photo);
+        $contact->delete();
+
+        return redirect()->route('contacts.index')->with('success','Contacts deleted successfully');
+    }
+
+    private function removePhoto($photo)
+    {
+        if ($photo != 'default.png'){
+            $file_path = config('uploads.path.full_path').$photo;
+            if(file_exists($file_path)){
+                unlink($file_path);
+            }
+        }
     }
 }

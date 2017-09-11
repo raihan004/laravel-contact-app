@@ -25,10 +25,10 @@ class CreateGroupAndContactsTable extends Migration
             $table->integer('group_id')->unsigned()->default(0);
             $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
             $table->string('name');
-            $table->string('company');
+            $table->string('company')->nullable();
             $table->string('email');
-            $table->string('phone');
-            $table->string('address');
+            $table->string('phone')->nullable();
+            $table->string('address')->nullable();
             $table->timestamps();
         });
         

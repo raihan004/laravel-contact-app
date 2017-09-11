@@ -70,13 +70,15 @@
                 <div class="col-md-4">
                     <div class="fileinput fileinput-new" data-provides="fileinput">
                         <div class="fileinput-new thumbnail" style="width: 150px; height: 150px;">
-                            <img src="http://placehold.it/150x150" alt="Photo">
+                            <?php $location = $contact->photo == 'default.png' ? '/' : config('uploads.path.uploads_path'); ?>
+                             <img class="" src="{{ url( $location . $contact->photo) }}"  alt="avatar">
                         </div>
                         <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
                         <div class="text-center">
                             <span class="btn btn-default btn-file"><span class="fileinput-new">Choose Photo</span><span class="fileinput-exists">Change</span>
-                            <input
-                                name="..." type="file"></span>
+                                 <input name="photo" id="photo" type="file">
+                            </span>
+</span>
                                 <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
                         </div>
                     </div>
