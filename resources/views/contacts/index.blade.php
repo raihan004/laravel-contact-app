@@ -10,8 +10,7 @@
                         <div class="media">
                             <div class="media-left">
                             <a href="#"></a>
-                                <?php $location = $contact->photo == 'default.png' ? '/' : config('uploads.path.uploads_path'); ?>
-                                <img class="media-object" src="{{ url($location . $contact->photo) }}" width="100" height="100" alt="avatar">
+                                <img class="media-object" src="{{ url( $contact->location() ) }}" width="100" height="100" alt="avatar">
                             </a>
                             </div>
                             <div class="media-body">

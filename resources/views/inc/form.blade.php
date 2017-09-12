@@ -70,8 +70,7 @@
                 <div class="col-md-4">
                     <div class="fileinput fileinput-new" data-provides="fileinput">
                         <div class="fileinput-new thumbnail" style="width: 150px; height: 150px;">
-                            <?php $location = $contact->photo == 'default.png' ? '/' : config('uploads.path.uploads_path'); ?>
-                             <img class="" src="{{ url( $location . $contact->photo) }}"  alt="avatar">
+                             <img class="" src="{{ url( $contact->location() ) }}"  alt="avatar">
                         </div>
                         <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
                         <div class="text-center">

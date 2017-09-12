@@ -20,4 +20,14 @@ class Contact extends Model
     public function group(){
        return $this->belongsTo('App\Group');
     }
+
+    public function location($value = null){
+        $photo = $value ? $value : $this->attributes['photo'];
+        if($photo == 'default.png'){
+            $path = "/{$photo}";
+        }else{
+            $path = config('uploads.path.uploads_path') . $photo;
+        }
+        return  $path;
+    }
 }
